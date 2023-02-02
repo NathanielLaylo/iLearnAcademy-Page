@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iLearn Academy</title>
+    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://use.fontawesome.com/86e0cb0b96.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <h1 v-text="sitename" class="heading"></h1>
+            <button v-if='enableCart || showLesson === false' v-on:click='toggleShowCart'>
+                {{totalItemsCart}}
+                <span class= "fas fa-cart-plus"></span> Checkout
+            </button>
+            <button disabled v-else>
+                <span class= "fas fa-cart-plus"></span> Checkout
+            </button>
+            <label>Sorting Option:</label>
+            <select name="SortType" id="SortType" v-on:change="sorter()">
+                <option>Sort By</option>
+                <option value="1">Subject</option>
+                <option value="2">Location</option>
+                <option value="3">Price</option>
+                <option value="4">Availability</option>
+            </select>
+            <select name="SortOrder" id="SortOrder" v-on:change="sorter()">
+                <option value="5">Ascending</option>
+                <option value="6">Descending</option>               
+            </select>
+            <label>Search:</label>
+            <input type="text" id="searchInput" v-on:keyup="searchOnType()">              
+        </header>
+        <div v-if="showLesson && showSearch">
+            <main>                             
+                <div v-for="lesson in search">
+                    <div class="lesson">
+                        <figure>
+                            <img v-bind:src="lesson.image">
+                        </figure>
+                            <p>Subject: {{lesson.subject}}</p>
+                            <p>Location: {{lesson.location}}</p>
+                            <p>Price: {{lesson.price}}</p>
+                            <p>Space: {{lesson.space}}</p>
+                            <button v-on:click="add(lesson)" v-if="canAddtoCart(lesson)"> Add To Cart</button>
+                            <button disabled v-else> Add To Cart </button>
+                            <div class="rating">
+                                <span class="fa fa-star" v-for='n in lesson.rating'></span>
+                                <span class="fa fa-star-o" v-for='n in 5 - lesson.rating'></span>
+                            </div>
+                    </div><!-- end of row-->
+                </div><!-- end of v-for-->
+            </main>
+        </div>
+        <div v-else-if="showLesson">
+            <main>                             
+                <div v-for="lesson in lesson">
+                    <div class="lesson">
+                        <figure>
+                            <img v-bind:src="lesson.image">
+                        </figure>
+                            <p>Subject: {{lesson.subject}}</p>
+                            <p>Location: {{lesson.location}}</p>
+                            <p>Price: {{lesson.price}}</p>
+                            <p>Space: {{lesson.space}}</p>
+                            <button v-on:click="add(lesson)" v-if="canAddtoCart(lesson)"> Add To Cart</button>
+                            <button disabled v-else> Add To Cart </button>
+                            <div class="rating">
+                                <span class="fa fa-star" v-for='n in lesson.rating'></span>
+                                <span class="fa fa-star-o" v-for='n in 5 - lesson.rating'></span>
+                            </div>
+                    </div><!-- end of row-->
+                </div><!-- end of v-for-->
+            </main>
+        </div>
+        <div v-else>
+            <h1 class="heading">Welcome to Cart</h1>
+            <div v-for="lesson in cart">
+                <div class="lesson">
+                    <figure>
+                        <img v-bind:src="lesson.image">
+                    </figure>
+                        <p>Subject: {{lesson.subject}}</p>
+                        <p>Location: {{lesson.location}}</p>
+                        <p>Price: {{lesson.price}}</p>
+                        <p>Space: {{lesson.space}}</p>
+                        <button v-on:click="remove(lesson)"> Remove </button>
+                        <div class="rating">
+                            <span class="fa fa-star" v-for='n in lesson.rating'></span>
+                            <span class="fa fa-star-o" v-for='n in 5 - lesson.rating'></span>
+                        </div>
+                </div><!-- end of row-->
+            </div><!-- end of v-for-->
+            <div class="checkout">
+                <h1>Checkout</h1>
+                <h2>Total Amount: {{showTotal}}</h2>
+                <form name="checkoutForm" class="form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="userName" name="userName" value="" v-on:keyup="enableCheckButton()"><br>
+                    <label for="number">Phone Number:</label>
+                    <input type="text" id="userNumber" name="userNumber" value="" v-on:keyup="enableCheckButton()"><br>                    
+                </form>
+                <button v-if='enableCheckoutButton' v-on:click="submitCheckout()">Checkout</button>
+                <button disabled v-else>Checkout</button>
+                <p id="checkFeedback"></p>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="./lessons.js"></script>
+<script type="text/javascript" src="./vue.js"></script>
+</body>
+
+</html>
