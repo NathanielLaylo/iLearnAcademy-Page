@@ -184,7 +184,7 @@ var webstore = new Vue({
                 headers: {
                     "Content-Type": "application/json", //set the data type as JSON
                 },              
-                body: JSON.stringify(newProduct) //need to stringigy the JSON
+                body: JSON.stringify(order) //need to stringigy the JSON
             }).then(
                 function (response) {
                     response.json().then(
