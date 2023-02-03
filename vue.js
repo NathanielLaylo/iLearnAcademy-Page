@@ -191,6 +191,10 @@ var webstore = new Vue({
                 lesson_ID: 1001,
                 space: 1
             };
+            let lesson = {
+                space: 1
+            };
+
             fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
                 method: "POST", //set the HTTP method as "POST"
                 headers: {
@@ -204,6 +208,25 @@ var webstore = new Vue({
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
                             webstore.placedOrder.push(newProduct);
+                        }
+                    )
+                }
+            );
+
+            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
+                method: "PUT", //set the HTTP method as "PUT"
+                headers: {
+                    "Content-Type": "application/json", //set the data type as JSON
+                },              
+                body: JSON.stringify(order) //need to stringigy the JSON
+            }).then(
+                function (response) {
+                    response.json().then(
+                        function (json) {
+                            alert("Success: " + json.acknowledged);
+                            console.log("Success: " + json.acknowledged);
+                            webstore.lessons.updateOne({ id: 1001 },
+                            { $set: lesson});
                         }
                     )
                 }
