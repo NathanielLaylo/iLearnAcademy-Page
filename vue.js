@@ -175,13 +175,6 @@ var webstore = new Vue({
             }
 
         },
-        // submitCheckout() {
-        //     let userName = document.forms["checkoutForm"]["userName"].value;
-        //     document.getElementById('checkFeedback').innerHTML = "Thank you, " + userName + "! Your order has been submitted.";
-        //     alert("Thank you, " + userName + "! Your order has been submitted.");
-        //     this.searchOnType();
-        // },
-
         submitCheckout() {
             let userName = document.forms["checkoutForm"]["userName"].value;
             let userNumber = document.forms["checkoutForm"]["userNumber"].value;
@@ -234,7 +227,7 @@ var webstore = new Vue({
                             function (response) {
                                 response.json().then(
                                     function (json) {
-                                        console.log("Success: ");
+                                        console.log("Success");
                                     }
                                 )
                             }
@@ -242,6 +235,7 @@ var webstore = new Vue({
                     }
                 });
             }); 
+            this.cart = [];
         },
 
         stringLength(str){
