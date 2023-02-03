@@ -184,7 +184,7 @@ var webstore = new Vue({
 
         submitCheckout() {
             let userName = document.forms["checkoutForm"]["userName"].value;
-            let userNumber = document.forms["checkoutForm"]["userName"].value;
+            let userNumber = document.forms["checkoutForm"]["userNumber"].value;
             let order = {
                 name: userName,
                 phone_number: userNumber,
