@@ -9,7 +9,8 @@ var webstore = new Vue({
         search: [],
         sortOrder: 0,
         enableCheckoutButton: false,
-        searchInput: ""
+        searchInput: "",
+        placedOrder: []
     },
     //add for handling error 
     created: function(){
@@ -20,6 +21,17 @@ var webstore = new Vue({
                         //alert(json);
                         console.log(json);
                         webstore.lesson = json;
+                    }
+                )
+            }
+        ),
+        fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order").then(
+            function(res){
+                res.json().then(
+                    function(json){
+                        //alert(json);
+                        console.log(json);
+                        webstore.placedOrder = json;
                     }
                 )
             }
@@ -163,13 +175,6 @@ var webstore = new Vue({
             }
 
         },
-        // submitCheckout() {
-        //     let userName = document.forms["checkoutForm"]["userName"].value;
-        //     document.getElementById('checkFeedback').innerHTML = "Thank you, " + userName + "! Your order has been submitted.";
-        //     alert("Thank you, " + userName + "! Your order has been submitted.");
-        //     this.searchOnType();
-        // },
-
         submitCheckout() {
             let userName = document.forms["checkoutForm"]["userName"].value;
             let userNumber = document.forms["checkoutForm"]["userName"].value;
@@ -179,7 +184,7 @@ var webstore = new Vue({
                 lesson_ID: 1001,
                 space: 1
             };
-            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons", {
+            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
                 method: "POST", //set the HTTP method as "POST"
                 headers: {
                     "Content-Type": "application/json", //set the data type as JSON
@@ -191,7 +196,7 @@ var webstore = new Vue({
                         function (json) {
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
-                            webstore.lessons.push(newProduct);
+                            webstore.placedOrder.push(newProduct);
                         }
                     )
                 }
