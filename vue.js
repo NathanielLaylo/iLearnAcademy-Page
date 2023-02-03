@@ -247,6 +247,20 @@ var webstore = new Vue({
         },
         searchOnType(){
             this.searchInput = document.getElementById('searchInput').value.toLowerCase();
+            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons/" + this.searchInput).then(
+            function(res){
+                res.json().then(
+                    function(json){
+                        //alert(json);
+                        console.log(json);
+                        webstore.search = json;
+                    }
+                )
+            }
+            );
+        }
+        /* searchOnType(){
+            this.searchInput = document.getElementById('searchInput').value.toLowerCase();
             let inputLength = this.stringLength(this.searchInput);
             let subCounter = 0;
             let stopper = false;
@@ -300,7 +314,7 @@ var webstore = new Vue({
                     }
                 }                               
             });
-        }
+        } */
         
     },
     computed: {
