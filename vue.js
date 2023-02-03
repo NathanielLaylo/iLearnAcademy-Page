@@ -191,11 +191,11 @@ var webstore = new Vue({
                 lesson_ID: 1001,
                 space: 1
             };
-            let lesson = {
+            let less = {
                 space: 1
             };
 
-            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
+            /* fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
                 method: "POST", //set the HTTP method as "POST"
                 headers: {
                     "Content-Type": "application/json", //set the data type as JSON
@@ -207,26 +207,27 @@ var webstore = new Vue({
                         function (json) {
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
-                            webstore.placedOrder.push(newProduct);
+                            webstore.placedOrder.push(order);
                         }
                     )
                 }
-            );
-
-            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
+            ); */
+                console.log("wasdasdas");
+            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons", {
                 method: "PUT", //set the HTTP method as "PUT"
                 headers: {
                     "Content-Type": "application/json", //set the data type as JSON
                 },              
-                body: JSON.stringify(order) //need to stringigy the JSON
+                body: JSON.stringify(less) //need to stringigy the JSON
             }).then(
                 function (response) {
                     response.json().then(
                         function (json) {
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
-                            webstore.lessons.updateOne({ id: 1001 },
-                            { $set: {space: 2}});
+                            webstore.lesson.updateOne({ id: 1001 },
+                            { $set: less  },
+                            { safe: true, multi: false });
                         }
                     )
                 }
