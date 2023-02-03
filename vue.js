@@ -192,7 +192,8 @@ var webstore = new Vue({
                 space: 1
             };
             let less = {
-                space: 1
+                space: 2,
+                price: 2222
             };
 
             /* fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
@@ -212,22 +213,19 @@ var webstore = new Vue({
                     )
                 }
             ); */
-                console.log("wasdasdas");
-            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons", {
+            let magic_id = '63dbbed99faabafcbafb29dd';
+             fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons/63dbbed99faabafcbafb29dd", {
                 method: "PUT", //set the HTTP method as "PUT"
                 headers: {
                     "Content-Type": "application/json", //set the data type as JSON
                 },              
-                body: JSON.stringify(less) //need to stringigy the JSON
+                body: JSON.stringify({ space: 2 }) //need to stringigy the JSON
             }).then(
                 function (response) {
                     response.json().then(
                         function (json) {
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
-                            webstore.lesson.updateOne({ id: 1001 },
-                            { $set: less  },
-                            { safe: true, multi: false });
                         }
                     )
                 }
