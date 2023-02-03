@@ -185,35 +185,66 @@ var webstore = new Vue({
         submitCheckout() {
             let userName = document.forms["checkoutForm"]["userName"].value;
             let userNumber = document.forms["checkoutForm"]["userNumber"].value;
-            let order = {
+            let orderID = [];
+            let uniID = [];
+            this.cart.forEach(element => { 
+                orderID.push(element.id),
+                uniID.push(element._id)  
+            });
+            console.log(orderID);
+            let finalOrder = {
                 name: userName,
                 phone_number: userNumber,
-                lesson_ID: 1001,
+                lesson_ID: orderID,
                 space: 1
             };
-            let less = {
-                space: 2,
-                price: 2222
-            };
-
-            /* fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
+            
+            console.log(finalOrder);
+             fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/order", {
                 method: "POST", //set the HTTP method as "POST"
                 headers: {
                     "Content-Type": "application/json", //set the data type as JSON
                 },              
-                body: JSON.stringify(order) //need to stringigy the JSON
+                body: JSON.stringify(finalOrder) //need to stringigy the JSON
             }).then(
                 function (response) {
                     response.json().then(
                         function (json) {
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
-                            webstore.placedOrder.push(order);
+                            webstore.placedOrder.push(finalOrder);
                         }
                     )
                 }
-            ); */
-            let magic_id = '63dbbed99faabafcbafb29dd';
+            );
+
+            uniID.forEach(element => {
+                this.lesson.forEach(xElem => {
+                    if(xElem._id === element){
+                        console.log(xElem.space)
+                        let newSpace = xElem.space;
+                         let pathx = "https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons/" + element;
+                         fetch(pathx, {
+                            method: "PUT", //set the HTTP method as "PUT"
+                            headers: {
+                                "Content-Type": "application/json", //set the data type as JSON
+                            },              
+                            body: JSON.stringify({ space: newSpace }) //need to stringigy the JSON
+                        }).then(
+                            function (response) {
+                                response.json().then(
+                                    function (json) {
+                                        console.log("Success: " + json.acknowledged);
+                                    }
+                                )
+                            }
+                        );     
+                    }
+                });
+            }); 
+
+
+            /* let magic_id = '63dbbed99faabafcbafb29dd';
              fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons/63dbbed99faabafcbafb29dd", {
                 method: "PUT", //set the HTTP method as "PUT"
                 headers: {
@@ -229,7 +260,7 @@ var webstore = new Vue({
                         }
                     )
                 }
-            );
+            ); */
         },
 
         stringLength(str){
