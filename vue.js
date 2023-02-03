@@ -5,12 +5,12 @@ var webstore = new Vue({
         sitename: 'iLearn Academy',
         showLesson: true,
         lesson: [],
+        placedOrder: [],
         cart: [],
         search: [],
         sortOrder: 0,
         enableCheckoutButton: false,
-        searchInput: "",
-        placedOrder: []
+        searchInput: ""
     },
     //add for handling error 
     created: function(){
@@ -175,6 +175,13 @@ var webstore = new Vue({
             }
 
         },
+        // submitCheckout() {
+        //     let userName = document.forms["checkoutForm"]["userName"].value;
+        //     document.getElementById('checkFeedback').innerHTML = "Thank you, " + userName + "! Your order has been submitted.";
+        //     alert("Thank you, " + userName + "! Your order has been submitted.");
+        //     this.searchOnType();
+        // },
+
         submitCheckout() {
             let userName = document.forms["checkoutForm"]["userName"].value;
             let userNumber = document.forms["checkoutForm"]["userName"].value;
