@@ -163,12 +163,41 @@ var webstore = new Vue({
             }
 
         },
+        // submitCheckout() {
+        //     let userName = document.forms["checkoutForm"]["userName"].value;
+        //     document.getElementById('checkFeedback').innerHTML = "Thank you, " + userName + "! Your order has been submitted.";
+        //     alert("Thank you, " + userName + "! Your order has been submitted.");
+        //     this.searchOnType();
+        // },
+
         submitCheckout() {
             let userName = document.forms["checkoutForm"]["userName"].value;
-            document.getElementById('checkFeedback').innerHTML = "Thank you, " + userName + "! Your order has been submitted.";
-            alert("Thank you, " + userName + "! Your order has been submitted.");
-            this.searchOnType();
+            let userNumber = document.forms["checkoutForm"]["userName"].value;
+            let order = {
+                name: userName,
+                phone_number: userNumber,
+                lesson_ID: 1001,
+                space: 1
+            };
+            fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons", {
+                method: "POST", //set the HTTP method as "POST"
+                headers: {
+                    "Content-Type": "application/json", //set the data type as JSON
+                },              
+                body: JSON.stringify(newProduct) //need to stringigy the JSON
+            }).then(
+                function (response) {
+                    response.json().then(
+                        function (json) {
+                            alert("Success: " + json.acknowledged);
+                            console.log("Success: " + json.acknowledged);
+                            webstore.lessons.push(newProduct);
+                        }
+                    )
+                }
+            );
         },
+
         stringLength(str){
             let strLength = 0;
             while(str[strLength] !== undefined){
