@@ -226,7 +226,7 @@ var webstore = new Vue({
                             alert("Success: " + json.acknowledged);
                             console.log("Success: " + json.acknowledged);
                             webstore.lessons.updateOne({ id: 1001 },
-                            { $set: lesson});
+                            { $set: {space: 2}});
                         }
                     )
                 }
