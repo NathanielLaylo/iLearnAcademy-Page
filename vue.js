@@ -13,7 +13,7 @@ var webstore = new Vue({
     },
     //add for handling error 
     created: function(){
-        fetch("http://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons").then(
+        fetch("https://ilearnacademy-env.eba-gpcfp2zw.eu-west-2.elasticbeanstalk.com/collections/lessons").then(
             function(res){
                 res.json().then(
                     function(json){
